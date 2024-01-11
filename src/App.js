@@ -1,4 +1,5 @@
 import "./App.css";
+import React, { useState } from "react";
 import gptlogo from "./assets/chatgpt.svg";
 import addBtn from "./assets/add-30.png";
 import msgIcon from "./assets/message.svg";
@@ -8,8 +9,32 @@ import rocket from "./assets/rocket.svg";
 import sendBtn from "./assets/send.svg";
 import userIcon from "./assets/user-icon.png";
 import gptImgLogo from "./assets/chatgptLogo.svg";
-
+import { sendMsgToOpenAi } from "./openai";
 function App() {
+  const [input, setInput] = useState("");
+
+  const [messages, setMessages] = useState([
+    {
+      test: " hi I am Chat gpt ,  a state of the art language model developed by open ai . I am desingend to undestand and generate human like test based on the input i recieve. you can ask me questions have converstion seek information or even request assinstance with various task just let me know how can i help you ",
+      isBot: true,
+    },
+  ]);
+
+  const handleSend = async () => {
+    const res = await sendMsgToOpenAi(input);
+    setMessages([
+      ...messages,
+      {
+        text: input,
+        isBot: false,
+      },
+      {
+        text: input,
+        isBot: true,
+      },
+    ]);
+  };
+
   return (
     <div className="App">
       <div className="sideBar">
@@ -52,43 +77,28 @@ function App() {
       </div>
       <div className="main">
         <div className="chats">
-          <div className="chat">
-            <img src={userIcon} alt="" className="chatImg" />
-            <p className="txt">
-              Lorem ipsum dolor sit amet consentncetur dipisiling elit.
-              Obcaecati sint nobis exceprture optio voluptas nemo ex officiis
-              eos quam illo
-            </p>
-          </div>
-          <div className="chat bot">
-            <img src={gptImgLogo} alt="" className="chatImg" />
-            <p className="txt">
-              Eu tempor labore id in sunt voluptate do dolore veniam anim elit
-              velit. Qui anim sit esse officia reprehenderit qui irure
-              incididunt. Consectetur labore ipsum officia ex qui exercitation
-              id anim aliquip ad eu elit irure. Consequat mollit non laboris
-              minim dolor ea ex Lorem cillum proident excepteur anim. Non duis
-              nisi aliqua aute culpa nostrud dolore voluptate nostrud ut
-              incididunt esse eiusmod ullamco. Fugiat labore do id culpa quis
-              veniam excepteur officia magna esse sint consequat labore sunt.
-              Enim ad reprehenderit non ad anim tempor fugiat ea pariatur amet
-              consectetur proident. Sint elit aliquip magna sit et officia culpa
-              fugiat duis elit. Tempor eu irure ullamco amet incididunt ad magna
-              dolore eu occaecat aliquip duis nisi. Pariatur non incididunt duis
-              irure laborum officia mollit ex eu aliquip. Cupidatat esse nostrud
-              anim elit. Esse ad sunt ipsum ullamco minim in fugiat fugiat sint
-              enim occaecat adipisicing exercitation. Officia labore enim elit
-              consectetur sint est et quis enim velit et quis ex sit. Labore
-              dolor consectetur ut incididunt exercitation dolor. Ipsum tempor
-              aliquip exercitation incididunt laborum sit reprehenderit dolor
-              
-            </p>
-          </div>
+          {messages.map((message, i) => (
+            <div key={i} className={message.isBot ? "chat bot" : "chat"}>
+              <img
+                src={message.isBot ? gptImgLogo : userIcon}
+                alt=""
+                className="chatImg"
+              />
+              <p className="txt">{message.test}</p>
+            </div>
+          ))}
         </div>
         <div className="chatFooter">
           <div className="inp">
-            <input type="text" placeholder="send a message ..." />
-            <button className="send">
+            <input
+              type="text"
+              placeholder="send a message ..."
+              value={input}
+              onChange={(e) => {
+                setInput(e.target.value);
+              }}
+            />
+            <button className="send" onClick={handleSend}>
               <img src={sendBtn} alt="" />
             </button>
           </div>
