@@ -6,13 +6,6 @@ This project is a clone of the Chat GPT application, created using React.js. It 
 
 ## Table of Contents
 
-- [Demo](https://chat-gpt-theta-taupe.vercel.app/)
-- [Features]([#features](https://chat-gpt-theta-taupe.vercel.app/))
-- [Getting Started]([#getting-started](https://chat-gpt-theta-taupe.vercel.app/))
-- [Usage]([#usage](https://chat-gpt-theta-taupe.vercel.app/))
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Demo
 
 ![image](https://github.com/riteshk-007/Chat-GPT-Clone/assets/135107962/7e299f54-f647-466c-923d-40c803aa7b86)
